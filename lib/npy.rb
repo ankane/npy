@@ -106,6 +106,9 @@ module Npy
 
     # header is Python dict, so use regex to parse
     def parse_header(header)
+      # sanity check
+      raise "Bad header" unless header[-1] == "\n"
+
       # descr
       m = /'descr': *'([^']+)'/.match(header)
       descr = m[1]
