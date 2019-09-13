@@ -107,15 +107,15 @@ module Npy
     # header is Python dict, so use regex to parse
     def parse_header(header)
       # descr
-      m = /'descr': '([^']+)'/.match(header)
+      m = /'descr': *'([^']+)'/.match(header)
       descr = m[1]
 
       # fortran_order
-      m = /'fortran_order': ([^,]+)/.match(header)
+      m = /'fortran_order': *([^,]+)/.match(header)
       fortran_order = m[1] == "True"
 
       # shape
-      m = /'shape': \(([^)]*)\)/.match(header)
+      m = /'shape': *\(([^)]*)\)/.match(header)
       shape = m[1].split(", ").map(&:to_i)
 
       [descr, fortran_order, shape]
