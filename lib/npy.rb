@@ -44,7 +44,7 @@ module Npy
         case major_version
         when "\x01".b
           io.read(2).unpack1("S<")
-        when "\x02".b
+        when "\x02".b, "\x03".b
           io.read(4).unpack1("I<")
         else
           raise Error, "Unsupported version"
