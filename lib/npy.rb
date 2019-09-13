@@ -53,6 +53,10 @@ module Npy
       descr, fortran_order, shape = parse_header(header)
       raise Error, "Fortran order not supported" if fortran_order
 
+      # numo can't handle empty shapes
+      empty_shape = shape.empty?
+      shape = [1] if empty_shape
+
       klass =
         case descr
         when "|i1"
@@ -83,7 +87,9 @@ module Npy
           raise Error, "Type not supported: #{descr}"
         end
 
-      klass.from_binary(io.read, shape)
+      result = klass.from_binary(io.read, shape)
+      result = result[0] if empty_shape
+      result
     end
 
     def load_npz_io(io)
@@ -109,7 +115,7 @@ module Npy
       fortran_order = m[1] == "True"
 
       # shape
-      m = /'shape': \(([^)]+)\)/.match(header)
+      m = /'shape': \(([^)]*)\)/.match(header)
       shape = m[1].split(", ").map(&:to_i)
 
       [descr, fortran_order, shape]

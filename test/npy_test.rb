@@ -21,6 +21,11 @@ class NpyTest < Minitest::Test
     assert_equal Numo::UInt64[0...10], act
   end
 
+  def test_load_npy_constant
+    act = Npy.load("test/support/constant.npy")
+    assert_equal 1, act
+  end
+
   # rubyzip not playing nicely with StringIO
   # def test_load_npz_string
   #   byte_str = File.binread("test/support/multiple.npz")
