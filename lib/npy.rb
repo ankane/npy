@@ -38,14 +38,16 @@ module Npy
       raise Error, "Invalid npy format" unless magic&.b == MAGIC_STR
 
       major_version = io.read(1)
-      minor_version = io.read(1)
-      raise Error, "Unsupported version" unless ["\x01".b, "\x02".b].include?(major_version)
+      _minor_version = io.read(1)
 
       header_len =
-        if major_version == "\x01".b
+        case major_version
+        when "\x01".b
           io.read(2).unpack1("S<")
-        else # version 2.0
+        when "\x02".b
           io.read(4).unpack1("I<")
+        else
+          raise Error, "Unsupported version"
         end
       header = io.read(header_len)
       descr, fortran_order, shape = parse_header(header)
