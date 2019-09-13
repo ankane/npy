@@ -39,6 +39,7 @@ module Npy
 
       major_version = io.read(1)
       minor_version = io.read(1)
+      # TODO support version 2, which uses 4 bytes for header length
       raise Error, "Unsupported version" unless major_version == "\x01".b
 
       header_len = io.read(2).unpack1("S<")
