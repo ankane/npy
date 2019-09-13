@@ -4,7 +4,7 @@ x = np.arange(10)
 y = x * 2
 
 np.save("test/support/single.npy", x)
-np.save("test/support/constant.npy", np.array(1))
+np.save("test/support/empty_shape.npy", np.array(1))
 np.savez("test/support/multiple.npz", x=x, y=y)
 
 x2 = np.load("test/support/single.npy")

@@ -21,8 +21,8 @@ class NpyTest < Minitest::Test
     assert_equal Numo::UInt64[0...10], act
   end
 
-  def test_load_npy_constant
-    act = Npy.load("test/support/constant.npy")
+  def test_empty_shape
+    act = Npy.load("test/support/empty_shape.npy")
     assert_equal 1, act
   end
 
