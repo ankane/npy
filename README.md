@@ -61,6 +61,7 @@ Arrays are lazy loaded for performance
 
 - [npy format](https://docs.scipy.org/doc/numpy/reference/generated/numpy.lib.format.html#module-numpy.lib.format)
 - [NumPy data types](https://docs.scipy.org/doc/numpy/user/basics.types.html)
+- [Numo::NArray docs](https://ruby-numo.github.io/narray/narray/Numo/NArray.html)
 
 ## History
 
