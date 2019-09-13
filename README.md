@@ -60,6 +60,7 @@ Arrays are lazy loaded for performance
 ## Resources
 
 - [npy format](https://docs.scipy.org/doc/numpy/reference/generated/numpy.lib.format.html#module-numpy.lib.format)
+- [NumPy data types](https://docs.scipy.org/doc/numpy/user/basics.types.html)
 
 ## History
 
