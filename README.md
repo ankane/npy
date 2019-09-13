@@ -4,6 +4,8 @@ Load NumPy `npy` and `npz` files in Ruby - no Python required
 
 :fire: Uses [Numo::NArray](https://github.com/ruby-numo/numo-narray) for blazing performance
 
+[![Build Status](https://travis-ci.org/ankane/npy.svg?branch=master)](https://travis-ci.org/ankane/npy)
+
 ## Installation
 
 Add this line to your application’s Gemfile:
