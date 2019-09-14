@@ -20,7 +20,7 @@ gem 'npy'
 
 `npy` files contain a single array
 
-Save an array [master]
+Save an array
 
 ```ruby
 arr = Numo::Int32[0...10]
@@ -44,7 +44,7 @@ arr = Npy.load_string(byte_str)
 
 `npz` files contain multiple arrays
 
-Save multiple arrays [master]
+Save multiple arrays
 
 ```ruby
 x =  Numo::Int32[0...10]

@@ -1,7 +1,7 @@
-## 0.1.1 [unreleased]
+## 0.1.1
 
 - Added support for saving files
-- Added support for npy version 2.0
+- Added support for npy version 2.0 and 3.0
 - Fixed error with empty shapes
 
 ## 0.1.0
