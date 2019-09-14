@@ -156,4 +156,12 @@ class NpyTest < Minitest::Test
     assert_equal y, data["y"]
     # Npy.save_npz("test/support/generated.npz", x: x, y: y)
   end
+
+  def test_save_npz_overwrites
+    x = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
+    Npy.save_npz(tempfile, x: x)
+    Npy.save_npz(tempfile, x2: x)
+    data = Npy.load_npz(tempfile)
+    assert_equal ["x2"], data.keys
+  end
 end

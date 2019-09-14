@@ -93,10 +93,14 @@ module Npy
     end
 
     def save_npz(path, **arrs)
-      Zip::File.open(path, Zip::File::CREATE) do |zipfile|
-        arrs.each do |k, v|
-          zipfile.get_output_stream("#{k}.npy") do |f|
-            save_io(f, v)
+      # use File.open instead passing path to zip file
+      # so it overrides instead of appends
+      ::File.open(path, "wb") do |f|
+        Zip::File.open(f, Zip::File::CREATE) do |zipfile|
+          arrs.each do |k, v|
+            zipfile.get_output_stream("#{k}.npy") do |f2|
+              save_io(f2, v)
+            end
           end
         end
       end
