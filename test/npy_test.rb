@@ -115,21 +115,21 @@ class NpyTest < Minitest::Test
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
     assert_equal arr, Npy.load(tempfile)
-    Npy.save("test/support/generated.npy", arr)
+    # Npy.save("test/support/generated.npy", arr)
   end
 
   def test_save_npy_array
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr.to_a)
     assert_equal arr, Npy.load(tempfile)
-    Npy.save("test/support/generated.npy", arr)
+    # Npy.save("test/support/generated_array.npy", arr)
   end
 
   def test_save_npy_empty_shape
     arr = 1
     Npy.save(tempfile, arr)
     assert_equal arr, Npy.load(tempfile)
-    Npy.save("test/support/generated_empty.npy", arr)
+    # Npy.save("test/support/generated_empty.npy", arr)
   end
 
   def test_save_npy_bad_type
@@ -154,6 +154,6 @@ class NpyTest < Minitest::Test
     assert_equal ["x", "y"], data.keys
     assert_equal x, data["x"]
     assert_equal y, data["y"]
-    Npy.save_npz("test/support/generated.npz", x: x, y: y)
+    # Npy.save_npz("test/support/generated.npz", x: x, y: y)
   end
 end
