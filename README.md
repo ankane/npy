@@ -1,6 +1,6 @@
 # Npy
 
-Load NumPy `npy` and `npz` files in Ruby - no Python required
+Save and load NumPy `npy` and `npz` files in Ruby - no Python required
 
 :fire: Uses [Numo::NArray](https://github.com/ruby-numo/numo-narray) for blazing performance
 
@@ -20,6 +20,13 @@ gem 'npy'
 
 `npy` files contain a single array
 
+Save an array [master]
+
+```ruby
+arr = Numo::Int32[0...10]
+Npy.save("x.npy", arr)
+```
+
 Load an `npy` file
 
 ```ruby
@@ -36,6 +43,14 @@ arr = Npy.load_string(byte_str)
 ### npz
 
 `npz` files contain multiple arrays
+
+Save multiple arrays [master]
+
+```ruby
+x =  Numo::Int32[0...10]
+y = x * 2
+Npy.save_npz("mnist.npz", x: x, y: y)
+```
 
 Load an `npz` file
 

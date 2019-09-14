@@ -3,7 +3,7 @@ require_relative "lib/npy/version"
 Gem::Specification.new do |spec|
   spec.name          = "npy"
   spec.version       = Npy::VERSION
-  spec.summary       = "Load NumPy npy and npz files in Ruby"
+  spec.summary       = "Save and load NumPy npy and npz files in Ruby"
   spec.homepage      = "https://github.com/ankane/npy"
   spec.license       = "MIT"
 

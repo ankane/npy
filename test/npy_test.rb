@@ -110,4 +110,28 @@ class NpyTest < Minitest::Test
     act = Npy.load("test/support/types/complex128.npy")
     assert_equal Numo::DComplex[0...10], act
   end
+
+  def test_save_npy
+    arr = Numo::Int64[0...10]
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+    Npy.save("test/support/generated.npy", arr)
+  end
+
+  def test_save_npy_float64
+    arr = Numo::DFloat[0...10]
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+  end
+
+  def test_save_npz
+    x =  Numo::Int32[0...10]
+    y = x * 2
+    Npy.save_npz(tempfile, x: x, y: y)
+    data = Npy.load_npz(tempfile)
+    assert_equal ["x", "y"], data.keys
+    assert_equal x, data["x"]
+    assert_equal y, data["y"]
+    Npy.save_npz("test/support/generated.npz", x: x, y: y)
+  end
 end

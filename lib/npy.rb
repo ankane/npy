@@ -11,6 +11,21 @@ module Npy
 
   MAGIC_STR = "\x93NUMPY".b
 
+  TYPE_MAP = {
+    "|i1" => Numo::Int8,
+    "<i2" => Numo::Int16,
+    "<i4" => Numo::Int32,
+    "<i8" => Numo::Int64,
+    "|u1" => Numo::UInt8,
+    "<u2" => Numo::UInt16,
+    "<u4" => Numo::UInt32,
+    "<u8" => Numo::UInt64,
+    "<f4" => Numo::SFloat,
+    "<f8" => Numo::DFloat,
+    "<c8" => Numo::SComplex,
+    "<c16" => Numo::DComplex
+  }
+
   class << self
     def load(path)
       with_file(path) do |f|
@@ -57,35 +72,8 @@ module Npy
       empty_shape = shape.empty?
       shape = [1] if empty_shape
 
-      klass =
-        case descr
-        when "|i1"
-          Numo::Int8
-        when "<i2"
-          Numo::Int16
-        when "<i4"
-          Numo::Int32
-        when "<i8"
-          Numo::Int64
-        when "|u1"
-          Numo::UInt8
-        when "<u2"
-          Numo::UInt16
-        when "<u4"
-          Numo::UInt32
-        when "<u8"
-          Numo::UInt64
-        when "<f4"
-          Numo::SFloat
-        when "<f8"
-          Numo::DFloat
-        when "<c8"
-          Numo::SComplex
-        when "<c16"
-          Numo::DComplex
-        else
-          raise Error, "Type not supported: #{descr}"
-        end
+      klass = TYPE_MAP[descr]
+      raise Error, "Type not supported: #{descr}" unless klass
 
       result = klass.from_binary(io.read, shape)
       result = result[0] if empty_shape
@@ -96,7 +84,47 @@ module Npy
       File.new(io)
     end
 
+    def save(path, arr)
+      ::File.open(path, "wb") do |f|
+        save_io(f, arr)
+      end
+      true
+    end
+
+    def save_npz(path, **arrs)
+      Zip::File.open(path, Zip::File::CREATE) do |zipfile|
+        arrs.each do |k, v|
+          zipfile.get_output_stream("#{k}.npy") do |f|
+            save_io(f, v)
+          end
+        end
+      end
+      true
+    end
+
     private
+
+    def save_io(f, arr)
+      # desc
+      descr = TYPE_MAP.find { |k, v| arr.is_a?(v) }
+      raise "Unsupported type: #{arr.class.name}" unless descr
+
+      # shape
+      shape = arr.shape
+      shape << "" if shape.size == 1
+
+      # header
+      header = "{'descr': '#{descr[0]}', 'fortran_order': False, 'shape': (#{shape.join(",")}), }".b
+      padding_len = 64 - (11 + header.length) % 64
+      padding = "\x20".b * padding_len
+      header = "#{header}#{padding}\n"
+
+      f.write(MAGIC_STR)
+      f.write("\x01\x00".b)
+      f.write([header.bytesize].pack("S<"))
+      f.write(header)
+      f.write(arr.to_binary)
+    end
 
     def with_file(path)
       ::File.open(path, "rb") do |f|
@@ -107,7 +135,7 @@ module Npy
     # header is Python dict, so use regex to parse
     def parse_header(header)
       # sanity check
-      raise "Bad header" unless header[-1] == "\n"
+      raise "Bad header" if !header || header[-1] != "\n"
 
       # descr
       m = /'descr': *'([^']+)'/.match(header)
