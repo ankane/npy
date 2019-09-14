@@ -75,7 +75,9 @@ module Npy
       klass = TYPE_MAP[descr]
       raise Error, "Type not supported: #{descr}" unless klass
 
-      result = klass.from_binary(io.read, shape)
+      # use from_string instead of from_binary for max compatibility
+      # from_binary introduced in 0.9.0.4
+      result = klass.from_string(io.read, shape)
       result = result[0] if empty_shape
       result
     end
@@ -123,7 +125,7 @@ module Npy
       f.write("\x01\x00".b)
       f.write([header.bytesize].pack("S<"))
       f.write(header)
-      f.write(arr.to_binary)
+      f.write(arr.to_string)
     end
 
     def with_file(path)
