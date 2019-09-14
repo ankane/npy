@@ -112,14 +112,14 @@ class NpyTest < Minitest::Test
   end
 
   def test_save_npy
-    arr = Numo::Int64[0...10]
+    arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
     assert_equal arr, Npy.load(tempfile)
     Npy.save("test/support/generated.npy", arr)
   end
 
   def test_save_npy_array
-    arr = Numo::Int64[0...10]
+    arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr.to_a)
     assert_equal arr, Npy.load(tempfile)
     Npy.save("test/support/generated.npy", arr)
@@ -141,13 +141,13 @@ class NpyTest < Minitest::Test
   end
 
   def test_save_npy_float64
-    arr = Numo::DFloat[0...10]
+    arr = Numo::DFloat.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
     assert_equal arr, Npy.load(tempfile)
   end
 
   def test_save_npz
-    x =  Numo::Int32[0...10]
+    x = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     y = x * 2
     Npy.save_npz(tempfile, x: x, y: y)
     data = Npy.load_npz(tempfile)

@@ -121,7 +121,7 @@ module Npy
       shape = [] if empty_shape
 
       # header
-      header = "{'descr': '#{descr[0]}', 'fortran_order': False, 'shape': (#{shape.join(",")}), }".b
+      header = "{'descr': '#{descr[0]}', 'fortran_order': False, 'shape': (#{shape.join(", ")}), }".b
       padding_len = 64 - (11 + header.length) % 64
       padding = "\x20".b * padding_len
       header = "#{header}#{padding}\n"
@@ -154,7 +154,8 @@ module Npy
 
       # shape
       m = /'shape': *\(([^)]*)\)/.match(header)
-      shape = m[1].split(", ").map(&:to_i)
+      # no space in split for max compatibility
+      shape = m[1].split(",").map(&:to_i)
 
       [descr, fortran_order, shape]
     end
