@@ -107,7 +107,7 @@ module Npy
     def save_io(f, arr)
       # desc
       descr = TYPE_MAP.find { |k, v| arr.is_a?(v) }
-      raise "Unsupported type: #{arr.class.name}" unless descr
+      raise Error, "Unsupported type: #{arr.class.name}" unless descr
 
       # shape
       shape = arr.shape
@@ -135,7 +135,7 @@ module Npy
     # header is Python dict, so use regex to parse
     def parse_header(header)
       # sanity check
-      raise "Bad header" if !header || header[-1] != "\n"
+      raise Error, "Bad header" if !header || header[-1] != "\n"
 
       # descr
       m = /'descr': *'([^']+)'/.match(header)

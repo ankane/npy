@@ -118,6 +118,14 @@ class NpyTest < Minitest::Test
     Npy.save("test/support/generated.npy", arr)
   end
 
+  def test_save_npy_bad_type
+    arr = "hello"
+    error = assert_raises Npy::Error do
+      Npy.save(tempfile, arr)
+    end
+    assert_equal "Unsupported type: String", error.message
+  end
+
   def test_save_npy_float64
     arr = Numo::DFloat[0...10]
     Npy.save(tempfile, arr)
