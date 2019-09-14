@@ -109,6 +109,7 @@ module Npy
     def save_io(f, arr)
       empty_shape = arr.is_a?(Numeric)
       arr = Numo::NArray.cast([arr]) if empty_shape
+      arr = Numo::NArray.cast(arr) if arr.is_a?(Array)
 
       # desc
       descr = TYPE_MAP.find { |k, v| arr.is_a?(v) }

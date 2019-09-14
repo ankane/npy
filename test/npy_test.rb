@@ -118,6 +118,13 @@ class NpyTest < Minitest::Test
     Npy.save("test/support/generated.npy", arr)
   end
 
+  def test_save_npy_array
+    arr = Numo::Int64[0...10]
+    Npy.save(tempfile, arr.to_a)
+    assert_equal arr, Npy.load(tempfile)
+    Npy.save("test/support/generated.npy", arr)
+  end
+
   def test_save_npy_empty_shape
     arr = 1
     Npy.save(tempfile, arr)
