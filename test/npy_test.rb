@@ -118,6 +118,13 @@ class NpyTest < Minitest::Test
     Npy.save("test/support/generated.npy", arr)
   end
 
+  def test_save_npy_empty_shape
+    arr = 1
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+    Npy.save("test/support/generated_empty.npy", arr)
+  end
+
   def test_save_npy_bad_type
     arr = "hello"
     error = assert_raises Npy::Error do

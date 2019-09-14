@@ -107,6 +107,9 @@ module Npy
     private
 
     def save_io(f, arr)
+      empty_shape = arr.is_a?(Numeric)
+      arr = Numo::NArray.cast([arr]) if empty_shape
+
       # desc
       descr = TYPE_MAP.find { |k, v| arr.is_a?(v) }
       raise Error, "Unsupported type: #{arr.class.name}" unless descr
@@ -114,6 +117,7 @@ module Npy
       # shape
       shape = arr.shape
       shape << "" if shape.size == 1
+      shape = [] if empty_shape
 
       # header
       header = "{'descr': '#{descr[0]}', 'fortran_order': False, 'shape': (#{shape.join(",")}), }".b
