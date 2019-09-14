@@ -52,14 +52,13 @@ module Npy
       magic = io.read(6)
       raise Error, "Invalid npy format" unless magic&.b == MAGIC_STR
 
-      major_version = io.read(1)
-      _minor_version = io.read(1)
+      version = io.read(2)
 
       header_len =
-        case major_version
-        when "\x01".b
+        case version
+        when "\x01\x00".b
           io.read(2).unpack1("S<")
-        when "\x02".b, "\x03".b
+        when "\x02\x00".b, "\x03\x00".b
           io.read(4).unpack1("I<")
         else
           raise Error, "Unsupported version"
