@@ -23,7 +23,7 @@ gem 'npy'
 Save an array
 
 ```ruby
-arr = Numo::Int32[0...10]
+arr = Numo::Int32[0..9]
 Npy.save("x.npy", arr)
 ```
 
@@ -47,7 +47,7 @@ arr = Npy.load_string(byte_str)
 Save multiple arrays
 
 ```ruby
-x =  Numo::Int32[0...10]
+x =  Numo::Int32[0..9]
 y = x * 2
 Npy.save_npz("mnist.npz", x: x, y: y)
 ```
