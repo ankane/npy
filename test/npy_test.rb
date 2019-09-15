@@ -26,16 +26,15 @@ class NpyTest < Minitest::Test
     assert_equal 1, act
   end
 
-  # rubyzip not playing nicely with StringIO
-  # def test_load_npz_string
-  #   byte_str = File.binread("test/support/multiple.npz")
-  #   data = Npy.load_npz_string(byte_str)
-  #   assert_equal ["x", "y"], data.keys
-  #   assert_equal Numo::UInt64[0...10], data["x"]
-  #   assert_equal Numo::UInt64[0...10] * 2, data["y"]
-  #   assert_equal ["x", "y"], data.to_h.keys
-  #   assert_nil data["z"]
-  # end
+  def test_load_npz_string
+    byte_str = File.binread("test/support/multiple.npz")
+    data = Npy.load_npz_string(byte_str)
+    assert_equal ["x", "y"], data.keys
+    assert_equal Numo::UInt64[0...10], data["x"]
+    assert_equal Numo::UInt64[0...10] * 2, data["y"]
+    assert_equal ["x", "y"], data.to_h.keys
+    assert_nil data["z"]
+  end
 
   def test_invalid_format
     error = assert_raises Npy::Error do

@@ -1,7 +1,10 @@
 # dependencies
 require "numo/narray"
 require "zip"
+
+# stdlib
 require "stringio"
+require "tempfile"
 
 # modules
 require "npy/file"
@@ -50,10 +53,17 @@ module Npy
       load_io(StringIO.new(byte_str))
     end
 
-    # rubyzip not playing nicely with StringIO
-    # def load_npz_string(byte_str)
-    #   load_npz_io(StringIO.new(byte_str))
-    # end
+    def load_npz_string(byte_str)
+      # not playing nicely with StringIO
+      file = Tempfile.new("npy")
+      begin
+        file.write(byte_str)
+        load_npz_io(file)
+      ensure
+        file.close
+        file.unlink
+      end
+    end
 
     # TODO make private
     def load_io(io)

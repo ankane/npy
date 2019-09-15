@@ -1,6 +1,7 @@
 ## 0.1.2 [unreleased]
 
 - Added support for saving and loading IO objects
+- Added `load_npz_string`
 - Fixed bug with 1 dimensional arrays
 
 ## 0.1.1
