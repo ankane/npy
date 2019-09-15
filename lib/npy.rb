@@ -33,9 +33,7 @@ module Npy
       when IO, StringIO
         load_io(path)
       else
-        with_file(path) do |f|
-          load_io(f)
-        end
+        load_file(path)
       end
     end
 
@@ -47,6 +45,12 @@ module Npy
 
     def load_string(byte_str)
       load_io(StringIO.new(byte_str))
+    end
+
+    def load_file(path)
+      with_file(path) do |f|
+        load_io(f)
+      end
     end
 
     # rubyzip not playing nicely with StringIO
@@ -96,9 +100,7 @@ module Npy
       when IO, StringIO
         save_io(path, arr)
       else
-        ::File.open(path, "wb") do |f|
-          save_io(f, arr)
-        end
+        save_file(path, arr)
       end
       true
     end
@@ -119,6 +121,12 @@ module Npy
     end
 
     private
+
+    def save_file(path, arr)
+      ::File.open(path, "wb") do |f|
+        save_io(f, arr)
+      end
+    end
 
     def save_io(f, arr)
       empty_shape = arr.is_a?(Numeric)
