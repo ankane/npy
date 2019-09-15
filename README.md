@@ -58,13 +58,6 @@ Load an `npz` file
 arrs = Npy.load_npz("mnist.npz")
 ```
 
-Load an `npz` string [master]
-
-```ruby
-byte_str = File.binread("mnist.npz")
-arrs = Npy.load_npz_string(byte_str)
-```
-
 Get keys
 
 ```ruby
