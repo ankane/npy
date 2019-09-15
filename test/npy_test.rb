@@ -146,6 +146,15 @@ class NpyTest < Minitest::Test
     assert_equal arr, Npy.load(tempfile)
   end
 
+  def test_save_npy_string
+    io = StringIO.new
+    arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
+    Npy.save(io, arr)
+    assert_equal arr, Npy.load_string(io.string)
+    io.rewind
+    assert_equal arr, Npy.load(io)
+  end
+
   def test_save_npz
     x = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     y = x * 2

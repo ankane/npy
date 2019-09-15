@@ -28,8 +28,13 @@ module Npy
 
   class << self
     def load(path)
-      with_file(path) do |f|
-        load_io(f)
+      case path
+      when IO, StringIO
+        load_io(path)
+      else
+        with_file(path) do |f|
+          load_io(f)
+        end
       end
     end
 
@@ -86,8 +91,13 @@ module Npy
     end
 
     def save(path, arr)
-      ::File.open(path, "wb") do |f|
-        save_io(f, arr)
+      case path
+      when IO, StringIO
+        save_io(path, arr)
+      else
+        ::File.open(path, "wb") do |f|
+          save_io(f, arr)
+        end
       end
       true
     end
