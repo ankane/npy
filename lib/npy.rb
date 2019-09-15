@@ -38,7 +38,7 @@ module Npy
     end
 
     def load_npz(path)
-      with_file(path) do |f|
+      with_file(path, "rb") do |f|
         load_npz_io(f)
       end
     end
@@ -47,17 +47,12 @@ module Npy
       load_io(StringIO.new(byte_str))
     end
 
-    def load_file(path)
-      with_file(path) do |f|
-        load_io(f)
-      end
-    end
-
     # rubyzip not playing nicely with StringIO
     # def load_npz_string(byte_str)
     #   load_npz_io(StringIO.new(byte_str))
     # end
 
+    # TODO make private
     def load_io(io)
       magic = io.read(6)
       raise Error, "Invalid npy format" unless magic&.b == MAGIC_STR
@@ -91,6 +86,7 @@ module Npy
       result
     end
 
+    # TODO make private
     def load_npz_io(io)
       File.new(io)
     end
@@ -122,8 +118,14 @@ module Npy
 
     private
 
+    def load_file(path)
+      with_file(path, "rb") do |f|
+        load_io(f)
+      end
+    end
+
     def save_file(path, arr)
-      ::File.open(path, "wb") do |f|
+      with_file(path, "wb") do |f|
         save_io(f, arr)
       end
     end
@@ -154,8 +156,8 @@ module Npy
       f.write(arr.to_string)
     end
 
-    def with_file(path)
-      ::File.open(path, "rb") do |f|
+    def with_file(path, mode)
+      ::File.open(path, mode) do |f|
         yield f
       end
     end
