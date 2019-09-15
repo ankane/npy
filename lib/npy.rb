@@ -126,7 +126,7 @@ module Npy
       arr = Numo::NArray.cast(arr) if arr.is_a?(Array)
 
       # desc
-      descr = TYPE_MAP.find { |k, v| arr.is_a?(v) }
+      descr = TYPE_MAP.find { |_, v| arr.is_a?(v) }
       raise Error, "Unsupported type: #{arr.class.name}" unless descr
 
       # shape

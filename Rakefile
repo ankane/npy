@@ -26,8 +26,8 @@ task :benchmark do
   raise "Mismatch: x1" unless x1 == x
   raise "Mismatch: x2" unless x2 == x
 
-  Benchmark.ips do |x|
-    x.report("numo") { Marshal.load(File.binread("#{tempdir}/x.dump")) }
-    x.report("npy") { Npy.load("#{tempdir}/x.npy") }
+  Benchmark.ips do |bx|
+    bx.report("numo") { Marshal.load(File.binread("#{tempdir}/x.dump")) }
+    bx.report("npy") { Npy.load("#{tempdir}/x.npy") }
   end
 end
