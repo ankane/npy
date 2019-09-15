@@ -105,16 +105,11 @@ module Npy
     end
 
     def save_npz(path, **arrs)
-      # use File.open instead passing path to zip file
-      # so it overrides instead of appends
-      ::File.open(path, "wb") do |f|
-        Zip::File.open(f, Zip::File::CREATE) do |zipfile|
-          arrs.each do |k, v|
-            zipfile.get_output_stream("#{k}.npy") do |f2|
-              save_io(f2, v)
-            end
-          end
-        end
+      case path
+      when IO, StringIO
+        save_npz_io(path, **arrs)
+      else
+        save_npz_file(path, **arrs)
       end
       true
     end
@@ -163,6 +158,22 @@ module Npy
       f.write([header.bytesize].pack("S<"))
       f.write(header)
       f.write(arr.to_string)
+    end
+
+    def save_npz_file(path, **arrs)
+      with_file(path, "wb") do |f|
+        save_npz_io(f, **arrs)
+      end
+    end
+
+    def save_npz_io(f, **arrs)
+      Zip::File.open(f, Zip::File::CREATE) do |zipfile|
+        arrs.each do |k, v|
+          zipfile.get_output_stream("#{k}.npy") do |f2|
+            save_io(f2, v)
+          end
+        end
+      end
     end
 
     def with_file(path, mode)
