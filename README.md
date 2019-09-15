@@ -49,13 +49,13 @@ Save multiple arrays
 ```ruby
 x =  Numo::Int32[0..9]
 y = x * 2
-Npy.save_npz("mnist.npz", x: x, y: y)
+Npy.save_npz("data.npz", x: x, y: y)
 ```
 
 Load an `npz` file
 
 ```ruby
-data = Npy.load_npz("mnist.npz")
+data = Npy.load_npz("data.npz")
 ```
 
 Get keys
