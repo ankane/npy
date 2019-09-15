@@ -38,8 +38,11 @@ module Npy
     end
 
     def load_npz(path)
-      with_file(path, "rb") do |f|
-        load_npz_io(f)
+      case path
+      when IO, StringIO
+        load_npz_io(path)
+      else
+        load_npz_file(path)
       end
     end
 
@@ -121,6 +124,12 @@ module Npy
     def load_file(path)
       with_file(path, "rb") do |f|
         load_io(f)
+      end
+    end
+
+    def load_npz_file(path)
+      with_file(path, "rb") do |f|
+        load_npz_io(f)
       end
     end
 
