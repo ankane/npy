@@ -114,12 +114,12 @@ module Npy
       true
     end
 
-    def save_npz(path, **arrs)
+    def save_npz(path, arrs)
       case path
       when IO, StringIO
-        save_npz_io(path, **arrs)
+        save_npz_io(path, arrs)
       else
-        save_npz_file(path, **arrs)
+        save_npz_file(path, arrs)
       end
       true
     end
@@ -170,13 +170,13 @@ module Npy
       f.write(arr.to_string)
     end
 
-    def save_npz_file(path, **arrs)
+    def save_npz_file(path, arrs)
       with_file(path, "wb") do |f|
-        save_npz_io(f, **arrs)
+        save_npz_io(f, arrs)
       end
     end
 
-    def save_npz_io(f, **arrs)
+    def save_npz_io(f, arrs)
       Zip::File.open(f, Zip::File::CREATE) do |zipfile|
         arrs.each do |k, v|
           zipfile.get_output_stream("#{k}.npy") do |f2|
