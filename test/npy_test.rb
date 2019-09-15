@@ -145,6 +145,13 @@ class NpyTest < Minitest::Test
     assert_equal arr, Npy.load(tempfile)
   end
 
+  def test_save_npy_1d
+    arr = Numo::Int64.cast([1, 2, 3, 4, 5, 6])
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+    # Npy.save("test/support/generated_1d.npy", arr)
+  end
+
   def test_save_npy_string
     io = StringIO.new
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
