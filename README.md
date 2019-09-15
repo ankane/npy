@@ -23,21 +23,21 @@ gem 'npy'
 Save an array
 
 ```ruby
-arr = Numo::Int32[0..9]
-Npy.save("x.npy", arr)
+x = Numo::Int32[0..9]
+Npy.save("x.npy", x)
 ```
 
 Load an `npy` file
 
 ```ruby
-arr = Npy.load("x.npy")
+x = Npy.load("x.npy")
 ```
 
 Load an `npy` string
 
 ```ruby
 byte_str = File.binread("x.npy")
-arr = Npy.load_string(byte_str)
+x = Npy.load_string(byte_str)
 ```
 
 ### npz
@@ -55,19 +55,19 @@ Npy.save_npz("mnist.npz", x: x, y: y)
 Load an `npz` file
 
 ```ruby
-arrs = Npy.load_npz("mnist.npz")
+data = Npy.load_npz("mnist.npz")
 ```
 
 Get keys
 
 ```ruby
-arrs.keys
+data.keys
 ```
 
 Get an array
 
 ```ruby
-arrs["x"]
+data["x"]
 ```
 
 Arrays are lazy loaded for performance
