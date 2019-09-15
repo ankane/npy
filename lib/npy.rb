@@ -1,6 +1,7 @@
 # dependencies
 require "numo/narray"
 require "zip"
+require "stringio"
 
 # modules
 require "npy/file"
