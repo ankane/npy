@@ -1,3 +1,7 @@
+## 0.1.2 [unreleased]
+
+- Fixed bug with 1 dimensional arrays
+
 ## 0.1.1
 
 - Added support for saving files
