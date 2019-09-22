@@ -30,7 +30,7 @@ module Npy
     "<c16" => Numo::DComplex,
     # must come last
     # as save use first match
-    "|b1" => Numo::Int8
+    "|b1" => Numo::UInt8
   }
 
   class << self

@@ -112,7 +112,7 @@ class NpyTest < Minitest::Test
 
   def test_type_bool
     act = Npy.load("test/support/types/bool.npy")
-    assert_equal Numo::Int8.cast([0] + ([1] * 9)), act
+    assert_equal Numo::UInt8.cast([0] + ([1] * 9)), act
   end
 
   def test_save_npy
