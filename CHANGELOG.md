@@ -1,8 +1,12 @@
+## 0.2.0 [unreleased]
+
+- Return `NArray` object for rank-0 arrays
+
 ## 0.1.2
 
 - Added support for saving and loading IO objects
 - Added `load_npz_string`
-- Fixed bug with 1 dimensional arrays
+- Fixed bug with rank-1 arrays
 
 ## 0.1.1
 

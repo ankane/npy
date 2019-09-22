@@ -21,9 +21,10 @@ class NpyTest < Minitest::Test
     assert_equal Numo::UInt64[0...10], act
   end
 
-  def test_empty_shape
-    act = Npy.load("test/support/empty_shape.npy")
-    assert_equal 1, act
+  def test_rank0
+    act = Npy.load("test/support/rank0.npy")
+    assert_equal 0, act.rank
+    assert_equal Numo::Int64.cast(1), act
   end
 
   def test_load_npz_string
