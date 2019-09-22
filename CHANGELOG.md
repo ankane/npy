@@ -1,3 +1,7 @@
+## 0.1.3 [unreleased]
+
+- Added support for bool type
+
 ## 0.1.2
 
 - Added support for saving and loading IO objects
