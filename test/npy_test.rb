@@ -129,6 +129,15 @@ class NpyTest < Minitest::Test
     # Npy.save("test/support/generated_array.npy", arr)
   end
 
+  # make sure no conflict with bool
+  # need to check output in verify.py
+  def test_save_npy_uint8
+    arr = Numo::UInt8.cast([[1, 2, 3], [4, 5, 6]])
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+    # Npy.save("test/support/generated_uint8.npy", arr)
+  end
+
   def test_save_npy_empty_shape
     arr = 1
     Npy.save(tempfile, arr)
