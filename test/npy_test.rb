@@ -110,6 +110,11 @@ class NpyTest < Minitest::Test
     assert_equal Numo::DComplex[0...10], act
   end
 
+  def test_type_bool
+    act = Npy.load("test/support/types/bool.npy")
+    assert_equal Numo::Int8.cast([0] + ([1] * 9)), act
+  end
+
   def test_save_npy
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
