@@ -125,7 +125,7 @@ class NpyTest < Minitest::Test
     # Npy.save("test/support/generated_array.npy", arr)
   end
 
-  def test_save_npy_empty_shape
+  def test_save_npy_rank0
     arr = 1
     Npy.save(tempfile, arr)
     assert_equal arr, Npy.load(tempfile)
