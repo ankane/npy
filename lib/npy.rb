@@ -145,9 +145,13 @@ module Npy
     end
 
     def save_io(f, arr)
-      empty_shape = arr.is_a?(Numeric)
-      arr = Numo::NArray.cast([arr]) if empty_shape
-      arr = Numo::NArray.cast(arr) if arr.is_a?(Array)
+      unless arr.is_a?(Numo::NArray)
+        begin
+          arr = Numo::NArray.cast(arr)
+        rescue TypeError
+          # do nothing
+        end
+      end
 
       # desc
       descr = TYPE_MAP.find { |_, v| arr.is_a?(v) }
@@ -155,7 +159,6 @@ module Npy
 
       # shape
       shape = arr.shape
-      shape = [] if empty_shape
 
       # header
       header = "{'descr': '#{descr[0]}', 'fortran_order': False, 'shape': (#{shape.join(", ")}#{shape.size == 1 ? "," : nil}), }".b
