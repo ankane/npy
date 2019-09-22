@@ -27,7 +27,10 @@ module Npy
     "<f4" => Numo::SFloat,
     "<f8" => Numo::DFloat,
     "<c8" => Numo::SComplex,
-    "<c16" => Numo::DComplex
+    "<c16" => Numo::DComplex,
+    # must come last
+    # as save uses first match
+    "|b1" => Numo::UInt8
   }
 
   class << self

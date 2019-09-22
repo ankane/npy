@@ -111,6 +111,11 @@ class NpyTest < Minitest::Test
     assert_equal Numo::DComplex[0...10], act
   end
 
+  def test_type_bool
+    act = Npy.load("test/support/types/bool.npy")
+    assert_equal Numo::UInt8.cast([0] + ([1] * 9)), act
+  end
+
   def test_save_npy
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
@@ -123,6 +128,15 @@ class NpyTest < Minitest::Test
     Npy.save(tempfile, arr.to_a)
     assert_equal arr, Npy.load(tempfile)
     # Npy.save("test/support/generated_array.npy", arr)
+  end
+
+  # make sure no conflict with bool
+  # need to check output in verify.py
+  def test_save_npy_uint8
+    arr = Numo::UInt8.cast([[1, 2, 3], [4, 5, 6]])
+    Npy.save(tempfile, arr)
+    assert_equal arr, Npy.load(tempfile)
+    # Npy.save("test/support/generated_uint8.npy", arr)
   end
 
   def test_save_npy_rank0
