@@ -88,18 +88,17 @@ module Npy
       descr, fortran_order, shape = parse_header(header)
       raise Error, "Fortran order not supported" if fortran_order
 
-      # numo from_string can't handle rank0
-      rank0 = shape.empty?
-      shape = [1] if rank0
-
       klass = TYPE_MAP[descr]
       raise Error, "Type not supported: #{descr}" unless klass
 
       # use from_string instead of from_binary for max compatibility
       # from_binary introduced in 0.9.0.4
-      result = klass.from_string(io.read, shape)
-      result = klass.cast(result[0]) if rank0
-      result
+      # numo from_string can't handle rank0
+      if shape.empty?
+        klass.cast(klass.from_string(io.read, [1])[0])
+      else
+        klass.from_string(io.read, shape)
+      end
     end
 
     # TODO make private
