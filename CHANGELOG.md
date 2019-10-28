@@ -1,4 +1,4 @@
-## 0.2.0 [unreleased]
+## 0.2.0
 
 - Added support for loading `bool` type (as `uint8` for now)
 - Return `NArray` object for rank-0 arrays
