@@ -11,7 +11,7 @@ Save and load NumPy `npy` and `npz` files in Ruby - no Python required
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'npy'
+gem "npy"
 ```
 
 ## Getting Started
