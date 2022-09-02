@@ -1,3 +1,7 @@
+## 0.3.0 (unreleased)
+
+- Dropped support for Ruby < 2.7
+
 ## 0.2.0 (2019-10-27)
 
 - Added support for loading `bool` type (as `uint8` for now)
