@@ -7,8 +7,8 @@ require "stringio"
 require "tempfile"
 
 # modules
-require "npy/file"
-require "npy/version"
+require_relative "npy/file"
+require_relative "npy/version"
 
 module Npy
   class Error < StandardError; end
