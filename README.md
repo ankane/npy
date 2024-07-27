@@ -4,7 +4,7 @@ Save and load NumPy `npy` and `npz` files in Ruby - no Python required
 
 :fire: Uses [Numo](https://github.com/ruby-numo/numo-narray) for blazing performance
 
-[![Build Status](https://github.com/ankane/npy/workflows/build/badge.svg?branch=master)](https://github.com/ankane/npy/actions)
+[![Build Status](https://github.com/ankane/npy/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/npy/actions)
 
 ## Installation
 
