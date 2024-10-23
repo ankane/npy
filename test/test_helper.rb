@@ -6,6 +6,11 @@ require "minitest/pride"
 class Minitest::Test
   private
 
+  def assert_array(exp, act)
+    assert_equal exp, act
+    assert_equal exp.class, act.class
+  end
+
   def teardown
     @tempfile = nil
   end
