@@ -27,6 +27,8 @@ class NpyTest < Minitest::Test
     assert_equal Numo::Int64.cast(1), act
   end
 
+  # this test fails when recreating multiple.npz
+  # rubyzip 3.0.0.alpha fixes it
   def test_load_npz_string
     byte_str = File.binread("test/support/multiple.npz")
     data = Npy.load_npz_string(byte_str)
