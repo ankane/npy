@@ -182,7 +182,8 @@ module Npy
     end
 
     def save_npz_io(f, arrs)
-      Zip::File.open(f, Zip::File::CREATE) do |zipfile|
+      # TODO change to create: true for rubyzip 3
+      Zip::File.open(f, true) do |zipfile|
         arrs.each do |k, v|
           zipfile.get_output_stream("#{k}.npy") do |f2|
             save_io(f2, v)
