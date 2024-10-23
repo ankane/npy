@@ -4,14 +4,14 @@ class SaveTest < Minitest::Test
   def test_save_npy
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
-    assert_equal arr, Npy.load(tempfile)
+    assert_array arr, Npy.load(tempfile)
     # Npy.save("test/support/generated.npy", arr)
   end
 
   def test_save_npy_array
-    arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
+    arr = Numo::Int32.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr.to_a)
-    assert_equal arr, Npy.load(tempfile)
+    assert_array arr, Npy.load(tempfile)
     # Npy.save("test/support/generated_array.npy", arr)
   end
 
@@ -20,7 +20,7 @@ class SaveTest < Minitest::Test
   def test_save_npy_uint8
     arr = Numo::UInt8.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
-    assert_equal arr, Npy.load(tempfile)
+    assert_array arr, Npy.load(tempfile)
     # Npy.save("test/support/generated_uint8.npy", arr)
   end
 
@@ -42,13 +42,13 @@ class SaveTest < Minitest::Test
   def test_save_npy_float64
     arr = Numo::DFloat.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr)
-    assert_equal arr, Npy.load(tempfile)
+    assert_array arr, Npy.load(tempfile)
   end
 
   def test_save_npy_1d
     arr = Numo::Int64.cast([1, 2, 3, 4, 5, 6])
     Npy.save(tempfile, arr)
-    assert_equal arr, Npy.load(tempfile)
+    assert_array arr, Npy.load(tempfile)
     # Npy.save("test/support/generated_1d.npy", arr)
   end
 
@@ -56,9 +56,9 @@ class SaveTest < Minitest::Test
     io = StringIO.new
     arr = Numo::Int64.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(io, arr)
-    assert_equal arr, Npy.load_string(io.string)
+    assert_array arr, Npy.load_string(io.string)
     io.rewind
-    assert_equal arr, Npy.load(io)
+    assert_array arr, Npy.load(io)
   end
 
   def test_save_npz
@@ -67,8 +67,8 @@ class SaveTest < Minitest::Test
     Npy.save_npz(tempfile, x: x, y: y)
     data = Npy.load_npz(tempfile)
     assert_equal ["x", "y"], data.keys
-    assert_equal x, data["x"]
-    assert_equal y, data["y"]
+    assert_array x, data["x"]
+    assert_array y, data["y"]
     # Npy.save_npz("test/support/generated.npz", x: x, y: y)
   end
 
