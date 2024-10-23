@@ -9,7 +9,7 @@ class SaveTest < Minitest::Test
   end
 
   def test_save_npy_array
-    arr = Numo::Int32.cast([[1, 2, 3], [4, 5, 6]])
+    arr = Numo::NArray.cast([[1, 2, 3], [4, 5, 6]])
     Npy.save(tempfile, arr.to_a)
     assert_array arr, Npy.load(tempfile)
     # Npy.save("test/support/generated_array.npy", arr)
