@@ -4,7 +4,7 @@ module Npy
       @streams = {}
       Zip::File.open_buffer(io) do |zipfile|
         zipfile.each do |entry|
-          name = entry.name.sub(/\.npy\z/, "")
+          name = entry.name.delete_suffix(".npy")
           @streams[name] = entry.get_input_stream
         end
       end
