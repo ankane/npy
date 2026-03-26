@@ -16,5 +16,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.3"
 
   spec.add_dependency "numo-narray"
-  spec.add_dependency "rubyzip", ">= 2.4.1"
+  spec.add_dependency "rubyzip", ">= 3"
 end
