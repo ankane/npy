@@ -9,7 +9,7 @@ task default: :test
 
 task :benchmark do
   require "benchmark/ips"
-  require "numo/narray"
+  require "numo/narray/alt"
   require "npy"
 
   x = Numo::Int32[1..1_000_000]
