@@ -34,21 +34,21 @@ module Npy
   }
 
   class << self
-    def load(path)
-      case path
+    def load(file)
+      case file
       when IO, StringIO
-        load_io(path)
+        load_io(file)
       else
-        load_file(path)
+        load_file(file)
       end
     end
 
-    def load_npz(path)
-      case path
+    def load_npz(file)
+      case file
       when IO, StringIO
-        load_npz_io(path)
+        load_npz_io(file)
       else
-        load_npz_file(path)
+        load_npz_file(file)
       end
     end
 
@@ -96,22 +96,22 @@ module Npy
       File.new(io)
     end
 
-    def save(path, arr)
-      case path
+    def save(file, arr)
+      case file
       when IO, StringIO
-        save_io(path, arr)
+        save_io(file, arr)
       else
-        save_file(path, arr)
+        save_file(file, arr)
       end
       true
     end
 
-    def save_npz(path, arrs)
-      case path
+    def save_npz(file, arrs)
+      case file
       when IO, StringIO
-        save_npz_io(path, arrs)
+        save_npz_io(file, arrs)
       else
-        save_npz_file(path, arrs)
+        save_npz_file(file, arrs)
       end
       true
     end
@@ -136,7 +136,7 @@ module Npy
       end
     end
 
-    def save_io(f, arr)
+    def save_io(io, arr)
       unless arr.is_a?(Numo::NArray)
         begin
           arr = Numo::NArray.cast(arr)
@@ -158,11 +158,11 @@ module Npy
       padding = "\x20".b * padding_len
       header = "#{header}#{padding}\n"
 
-      f.write(MAGIC_STR)
-      f.write("\x01\x00".b)
-      f.write([header.bytesize].pack("S<"))
-      f.write(header)
-      f.write(arr.to_string)
+      io.write(MAGIC_STR)
+      io.write("\x01\x00".b)
+      io.write([header.bytesize].pack("S<"))
+      io.write(header)
+      io.write(arr.to_string)
     end
 
     def save_npz_file(path, arrs)
@@ -171,11 +171,11 @@ module Npy
       end
     end
 
-    def save_npz_io(f, arrs)
-      Zip::File.open(f, create: true) do |zipfile|
+    def save_npz_io(io, arrs)
+      Zip::File.open(io, create: true) do |zipfile|
         arrs.each do |k, v|
-          zipfile.get_output_stream("#{k}.npy") do |f2|
-            save_io(f2, v)
+          zipfile.get_output_stream("#{k}.npy") do |f|
+            save_io(f, v)
           end
         end
       end
