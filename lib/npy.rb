@@ -35,8 +35,7 @@ module Npy
 
   class << self
     def load(file)
-      case file
-      when IO, StringIO
+      if file.respond_to?(:read)
         load_io(file)
       else
         load_file(file)
@@ -44,8 +43,7 @@ module Npy
     end
 
     def load_npz(file)
-      case file
-      when IO, StringIO
+      if file.respond_to?(:read)
         load_npz_io(file)
       else
         load_npz_file(file)
@@ -61,8 +59,7 @@ module Npy
     end
 
     def save(file, arr)
-      case file
-      when IO, StringIO
+      if file.respond_to?(:write)
         save_io(file, arr)
       else
         save_file(file, arr)
@@ -71,8 +68,7 @@ module Npy
     end
 
     def save_npz(file, arrs)
-      case file
-      when IO, StringIO
+      if file.respond_to?(:write)
         save_npz_io(file, arrs)
       else
         save_npz_file(file, arrs)

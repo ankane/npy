@@ -16,7 +16,7 @@ module Npy
     end
 
     def [](name)
-      @data[name] ||= Npy.send(:load_io, @streams[name].get_input_stream) if @streams[name]
+      @data[name] ||= Npy.load(@streams[name].get_input_stream) if @streams[name]
     end
 
     def to_h
