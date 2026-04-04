@@ -5,7 +5,7 @@ module Npy
       Zip::File.open_buffer(io) do |zipfile|
         zipfile.each do |entry|
           name = entry.name.delete_suffix(".npy")
-          @streams[name] = entry.get_input_stream
+          @streams[name] = entry
         end
       end
       @data = {}
@@ -16,7 +16,7 @@ module Npy
     end
 
     def [](name)
-      @data[name] ||= Npy.load_io(@streams[name]) if @streams[name]
+      @data[name] ||= Npy.load_io(@streams[name].get_input_stream) if @streams[name]
     end
 
     def to_h

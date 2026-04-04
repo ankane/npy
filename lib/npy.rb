@@ -57,15 +57,7 @@ module Npy
     end
 
     def load_npz_string(byte_str)
-      # not playing nicely with StringIO
-      file = Tempfile.new("npy")
-      begin
-        file.write(byte_str)
-        load_npz_io(file)
-      ensure
-        file.close
-        file.unlink
-      end
+      load_npz_io(StringIO.new(byte_str))
     end
 
     # TODO make private
