@@ -91,13 +91,11 @@ module Npy
       klass = TYPE_MAP[descr]
       raise Error, "Type not supported: #{descr}" unless klass
 
-      # use from_string instead of from_binary for max compatibility
-      # from_binary introduced in 0.9.0.4
       # numo from_string can't handle rank0
       if shape.empty?
         klass.cast(klass.from_string(io.read, [1])[0])
       else
-        klass.from_string(io.read, shape)
+        klass.from_binary(io.read, shape)
       end
     end
 
