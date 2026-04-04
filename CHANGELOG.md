@@ -1,4 +1,4 @@
-## 1.0.0 (unreleased)
+## 1.0.0 (2026-04-04)
 
 - Switched to `numo-narray-alt`
 - Removed `load_io` and `load_npz_io` methods (use `load` and `load_npz` instead)
