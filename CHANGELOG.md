@@ -1,6 +1,7 @@
-## 0.5.0 (unreleased)
+## 1.0.0 (unreleased)
 
 - Switched to `numo-narray-alt`
+- Removed `load_io` and `load_npz_io` methods (use `load` and `load_npz` instead)
 - Dropped support for Ruby < 3.3
 
 ## 0.4.0 (2024-10-23)
