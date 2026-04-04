@@ -2,7 +2,7 @@
 
 Save and load NumPy `npy` and `npz` files in Ruby - no Python required
 
-:fire: Uses [Numo](https://github.com/ruby-numo/numo-narray) for blazing performance
+:fire: Uses [numo-narray-alt](https://github.com/yoshoku/numo-narray-alt) for blazing performance
 
 [![Build Status](https://github.com/ankane/npy/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/npy/actions)
 
@@ -76,7 +76,6 @@ Arrays are lazy loaded for performance
 
 - [npy format](https://docs.scipy.org/doc/numpy/reference/generated/numpy.lib.format.html#module-numpy.lib.format)
 - [NumPy data types](https://docs.scipy.org/doc/numpy/user/basics.types.html)
-- [Numo::NArray docs](https://ruby-numo.github.io/narray/narray/Numo/NArray.html)
 
 ## History
 
