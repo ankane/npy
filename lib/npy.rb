@@ -156,7 +156,7 @@ module Npy
       io.write("\x01\x00".b)
       io.write([header.bytesize].pack("S<"))
       io.write(header)
-      io.write(arr.to_string)
+      io.write(arr.to_binary)
     end
 
     def save_npz_file(path, arrs)
