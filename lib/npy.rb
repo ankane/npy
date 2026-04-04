@@ -4,7 +4,6 @@ require "zip"
 
 # stdlib
 require "stringio"
-require "tempfile"
 
 # modules
 require_relative "npy/file"
