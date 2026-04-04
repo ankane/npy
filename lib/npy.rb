@@ -60,7 +60,34 @@ module Npy
       load_npz_io(StringIO.new(byte_str))
     end
 
-    # TODO make private
+    def save(file, arr)
+      case file
+      when IO, StringIO
+        save_io(file, arr)
+      else
+        save_file(file, arr)
+      end
+      true
+    end
+
+    def save_npz(file, arrs)
+      case file
+      when IO, StringIO
+        save_npz_io(file, arrs)
+      else
+        save_npz_file(file, arrs)
+      end
+      true
+    end
+
+    private
+
+    def load_file(path)
+      with_file(path, "rb") do |f|
+        load_io(f)
+      end
+    end
+
     def load_io(io)
       magic = io.read(6)
       raise Error, "Invalid npy format" unless magic&.b == MAGIC_STR
@@ -91,43 +118,14 @@ module Npy
       end
     end
 
-    # TODO make private
-    def load_npz_io(io)
-      File.new(io)
-    end
-
-    def save(file, arr)
-      case file
-      when IO, StringIO
-        save_io(file, arr)
-      else
-        save_file(file, arr)
-      end
-      true
-    end
-
-    def save_npz(file, arrs)
-      case file
-      when IO, StringIO
-        save_npz_io(file, arrs)
-      else
-        save_npz_file(file, arrs)
-      end
-      true
-    end
-
-    private
-
-    def load_file(path)
-      with_file(path, "rb") do |f|
-        load_io(f)
-      end
-    end
-
     def load_npz_file(path)
       with_file(path, "rb") do |f|
         load_npz_io(f)
       end
+    end
+
+    def load_npz_io(io)
+      File.new(io)
     end
 
     def save_file(path, arr)
